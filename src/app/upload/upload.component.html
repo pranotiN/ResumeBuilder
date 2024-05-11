@@ -1,0 +1,19 @@
+<input type="file" (change)="onFileSelected($event)">
+<button (click)="onSubmit()">Upload</button>
+
+<div *ngIf="uploadError">{{ uploadError }}</div> 
+
+
+<!-- <div class="file-container" *ngIf="!file">
+<input type="file" (change)="getFile($event)" class="file"/>
+
+<div *ngIf="file">
+    File Name : {{file.name}}
+    <button (click)="file = undefined">Clear File</button>
+</div> <br>
+<button (click)="UploadFile()">Upload File</button>
+
+
+</div>  -->
+
+
