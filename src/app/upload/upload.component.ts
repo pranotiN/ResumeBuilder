@@ -21,6 +21,8 @@ export class UploadComponent {
    selectedFile: File;
    uploadData: UploadData = {};
    uploadError: string;
+   loading: boolean;
+   resumeOutput: string;
 
    constructor(private http: HttpClient) {}
 
@@ -31,20 +33,23 @@ export class UploadComponent {
 
    onSubmit() {
     this.uploadData.file = this.selectedFile;
+    this.loading = true;
 
     // Add other data to uploadData as needed
 
      const formData = new FormData();
      formData.append('file', this.selectedFile);
-     formData.append('data', JSON.stringify(this.uploadData)); // Send additional data as JSON
+     //formData.append('data', JSON.stringify(this.uploadData)); // Send additional data as JSON
 
-     this.http.post<any>('your-backend-url', formData)
+     this.http.post<any>('https://tensorgirl-gemini-resume-parser.hf.space/resume_parser/', formData)
        .subscribe(response => {
          console.log('Upload successful!', response);
         this.selectedFile = null; // Clear selection after successful upload
+        this.resumeOutput = response;
        }, (error: HttpErrorResponse) => {
          this.uploadError = 'Upload failed: ' + error.message;
         console.error('Upload error:', error);
+        this.loading = false;
        });
    }
 
